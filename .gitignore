@@ -1,0 +1,10 @@
+.agents/
+.env
+.venv
+/drafts
+./drafts
+.DS_Store
+.__pycache__/
+__pycache__/
+*.pyc
+teste.py
