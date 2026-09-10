@@ -1,0 +1,17 @@
+[project]
+name = "trilha-python"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Darke Rangel", email = "darke_maciel@hotmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+trilha-python = "trilha_python:main"
+
+[build-system]
+requires = ["uv_build>=0.12.3,<0.13.0"]
+build-backend = "uv_build"
