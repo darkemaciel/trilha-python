@@ -1,0 +1,15 @@
+[project]
+name = "07-fastapi"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Darke Rangel", email = "darke_maciel@hotmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.141.1",
+    "psycopg2-binary>=2.9.9",
+    "sqlalchemy>=2.0.52",
+    "uvicorn[standard]>=0.53.0",
+]
