@@ -8,8 +8,8 @@ services:
   - type: web
     name: fastapi-crud
     runtime: docker
-    dockerfilePath: "07 - FastAPI/Dockerfile"
-    dockerContext: "07 - FastAPI"
+    rootDir: "07 - FastAPI"
+    dockerfilePath: ./Dockerfile
     plan: free
     envVars:
       - key: DATABASE_URL
