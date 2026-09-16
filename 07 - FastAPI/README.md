@@ -19,6 +19,7 @@ models.py     # modelo SQLAlchemy (tabela `itens`)
 schema.py     # schemas Pydantic (ItemBase, ItemCreate, Item)
 database.py   # configuração da engine/sessão e dependência get_db
 Dockerfile    # imagem para deploy (Render)
+render.yaml   # Blueprint do Render (web service + banco Postgres)
 ```
 
 ## Como rodar localmente
@@ -64,3 +65,25 @@ docker run -p 8000:8000 07-fastapi
 ```
 
 A porta é configurável via variável de ambiente `PORT` (padrão `8000`), usada pelo Render em deploy.
+
+## Deploy no Render
+
+O deploy usa o Blueprint (`render.yaml`) deste diretório, que provisiona automaticamente:
+
+- um **Web Service** (Docker) rodando esta API;
+- um banco **Postgres** (`fastapi-crud-db`), com a `DATABASE_URL` já conectada ao Web Service via `fromDatabase`.
+
+Como este repositório é um monorepo (a raiz não é este projeto), o `render.yaml` não fica na raiz do repo — ele usa a chave `rootDir` para apontar para esta subpasta (`07 - FastAPI`), e os demais caminhos (`dockerfilePath`) são relativos a ela.
+
+Passos para configurar (uma vez só):
+
+1. No dashboard do Render: **New → Blueprint**, selecione este repositório.
+2. No campo **Blueprint Path**, informe:
+   ```
+   07 - FastAPI/render.yaml
+   ```
+3. Confirme a criação — o Render vai propor o Web Service e o banco Postgres para aprovação.
+
+Depois disso, qualquer push no `main` (ou "Sync Blueprint"/"Manual Deploy" no dashboard) atualiza o serviço.
+
+**Atenção:** se `DATABASE_URL` não estiver definida (ex.: Blueprint mal configurado), a API sobe normalmente, só que gravando num SQLite dentro do container — sem erro nenhum, mas os dados somem a cada novo deploy. Pra confirmar que está gravando no Postgres de verdade, crie um item via `/docs`, force um redeploy e confira se ele continua lá.
